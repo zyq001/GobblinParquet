@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.linkedin.azkaban</groupId>
+  <artifactId>azkaban</artifactId>
+  <version>2.5.0</version>
+  <packaging>jar</packaging>
+
+  <name>Azkaban</name>
+  <description>Core jar for Azkaban 2.5 Schedule Manager</description>
+  <url>http://azkaban.github.io/azkaban2</url>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git@github.com:azkaban/azkaban2.git</connection>
+    <developerConnection>scm:git:git@github.com:azkaban/azkaban2.git</developerConnection>
+    <url>git@github.com:azkaban/azkaban2.git</url>
+  </scm>
+
+  <dependencies>
+  </dependencies>
+
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
+  <!--
+    NOT ALLOWED: (see FAQ)
+    <repositories></repositories>
+    <pluginRepositories></pluginRepositories>
+  -->
+
+</project>
