@@ -110,10 +110,10 @@ ext.externalDependency = [
   "xerces":"xercesImpl:2.11.0",
   "byteman": "org.jboss.byteman:byteman:"+bytemanVersion,
   "bytemanBmunit": "org.jboss.byteman:byteman-bmunit:"+bytemanVersion,
-  "parquet-column":'org.apache.parquet:parquet-column:1.8.1',
-  "parquet-common":'org.apache.parquet:parquet-common:1.8.1',
-  "parquet-hadoop":'org.apache.parquet:parquet-hadoop:1.8.1',
-  "parquet-avro":'org.apache.parquet:parquet-avro:1.8.1',
+  "parquet-column": "org.apache.parquet:parquet-column:1.8.1",
+  "parquet-common": "org.apache.parquet:parquet-common:1.8.1",
+  "parquet-hadoop": "org.apache.parquet:parquet-hadoop:1.8.1",
+  "parquet-avro": "org.apache.parquet:parquet-avro:1.8.1",
 
   "pegasus" : [
     "data" : "com.linkedin.pegasus:data:"+pegasusVersion,

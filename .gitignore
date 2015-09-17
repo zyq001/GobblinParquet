@@ -50,3 +50,6 @@ out/
 **/mainGeneratedDataTemplate
 **/mainGeneratedRest
 gobblin-dist
+gobblin-dist2
+*.tar.gz
+*.tar.gz2
