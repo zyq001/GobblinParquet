@@ -37,10 +37,10 @@ dependencies {
   compile externalDependency.findBugs
   compile externalDependency.mockito
   compile externalDependency.lombok
-  compile externalDependency.parquet-common
-  compile externalDependency.parquet-column
-  compile externalDependency.parquet-hadoop
-  compile externalDependency.parquet-avro
+  compile externalDependency.parquetCommon
+  compile externalDependency.parquetColumn
+  compile externalDependency.parquetHadoop
+  compile externalDependency.parquetAvro
 
 
   if (project.hasProperty('useHadoop2')) {
