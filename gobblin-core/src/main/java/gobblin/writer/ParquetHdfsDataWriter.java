@@ -17,11 +17,11 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Created by zangyq on 2015/9/13.
  */
-class ParquetHdfsDataWriter extends FsDataWriter<Group>{
+class ParquetHdfsDataWriter extends FsDataWriter<GenericRecord>{
 
     protected final AtomicLong count = new AtomicLong(0);
     private MessageType schema = null;
-    private GroupWriter groupWriter;
+    private ParquetWriter groupWriter;
 
     public ParquetHdfsDataWriter(State properties, String fileName, org.apache.avro.Schema schema, int numBranches, int branchId)
             throws IOException {
