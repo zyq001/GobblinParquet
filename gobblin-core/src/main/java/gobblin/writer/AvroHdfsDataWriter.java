@@ -32,7 +32,6 @@ import gobblin.configuration.State;
 import gobblin.util.ForkOperatorUtils;
 import gobblin.util.WriterUtils;
 
-
 /**
  * An extension to {@link FsDataWriter} that writes in Avro format in the form of {@link GenericRecord}s.
  *
