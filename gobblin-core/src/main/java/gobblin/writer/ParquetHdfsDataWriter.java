@@ -75,7 +75,7 @@ class ParquetHdfsDataWriter extends FsDataWriter<GenericRecord>{
         testConf.setBoolean("parquet.avro.write-old-list-structure", false);
 System.out.println("fffffffffffffffffffffffffffffffffffileNeme OUTPUT:    " + fileName);
         return AvroParquetWriter
-                .<GenericRecord>builder(new Path(fileName))
+                .<GenericRecord>builder(this.stagingFile)
                 .withSchema(schema)
                 .withConf(testConf)
                 .build();
