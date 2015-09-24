@@ -266,7 +266,7 @@ private static final String GET_RESOURCE_BY_TYPE = "/latest";
 
       System.out.println("Schemaiiiiiiid: " + id);
 //      String schemaUrl = KafkaAvroSchemaRegistry.this.url + GET_RESOURCE_BY_ID + id;
-        String schemaUrl = KafkaAvroSchemaRegistry.this.url + "realtime/id/1";
+        String schemaUrl = KafkaAvroSchemaRegistry.this.url + "realtime/id/0";
       GetMethod get = new GetMethod(schemaUrl);
 
       int statusCode;

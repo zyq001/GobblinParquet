@@ -107,8 +107,9 @@ public class KafkaAvroExtractor extends KafkaExtractor<Schema, GenericRecord> {
     byte[] schemaIdByteArray = Arrays.copyOfRange(payload, 1, 1 + KafkaAvroSchemaRegistry.SCHEMA_ID_LENGTH_BYTE);
     String schemaId = Hex.encodeHexString(schemaIdByteArray);
     Schema schema = null;
-    System.out.println("schemaId: " + schemaId);
+//    System.out.println("schemaId: " + schemaId);
     schema = this.schemaRegistry.getSchemaById(schemaId);
+//    schema = this.schemaRegistry.getLatestSchemaByTopic("realtime");
     System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDcode: schema: " + schema);
     reader.get().setSchema(schema);
     System.out.println("Reader.schema: " + reader.get().getSchema());
