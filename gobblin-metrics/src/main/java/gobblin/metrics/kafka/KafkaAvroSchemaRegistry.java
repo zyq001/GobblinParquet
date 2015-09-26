@@ -49,7 +49,8 @@ public class KafkaAvroSchemaRegistry {
 
   private static final int GET_SCHEMA_BY_ID_MAX_TIRES = 3;
   private static final int GET_SCHEMA_BY_ID_MIN_INTERVAL_SECONDS = 1;
-  private static final String GET_RESOURCE_BY_ID = "/id=";
+//  private static final String GET_RESOURCE_BY_ID = "/id=";
+private static final String GET_RESOURCE_BY_ID = "/id/";
 //  private static final String GET_RESOURCE_BY_TYPE = "/latest_with_type=";
 private static final String GET_RESOURCE_BY_TYPE = "/latest";
   private static final String SCHEMA_ID_HEADER_NAME = "Location";
@@ -61,7 +62,8 @@ private static final String GET_RESOURCE_BY_TYPE = "/latest";
   private static final String DEFAULT_KAFKA_SCHEMA_REGISTRY_CACHE_EXPIRE_AFTER_WRITE_MIN = "10";
 
   public static final String KAFKA_SCHEMA_REGISTRY_URL = "kafka.schema.registry.url";
-  public static final int SCHEMA_ID_LENGTH_BYTE = 16;
+//  public static final int SCHEMA_ID_LENGTH_BYTE = 16;
+public static final int SCHEMA_ID_LENGTH_BYTE = 4;
   public static final byte MAGIC_BYTE = 0x0;
 
   private final LoadingCache<String, Schema> cachedSchemasById;
@@ -265,8 +267,8 @@ private static final String GET_RESOURCE_BY_TYPE = "/latest";
     private Schema fetchSchemaByID(String id) throws SchemaNotFoundException, HttpException, IOException {
 
       System.out.println("Schemaiiiiiiid: " + id);
-//      String schemaUrl = KafkaAvroSchemaRegistry.this.url + GET_RESOURCE_BY_ID + id;
-        String schemaUrl = KafkaAvroSchemaRegistry.this.url + "realtime/id/0";
+      String schemaUrl = KafkaAvroSchemaRegistry.this.url + GET_RESOURCE_BY_ID + id;
+//        String schemaUrl = KafkaAvroSchemaRegistry.this.url + "realtime/id/0";
       GetMethod get = new GetMethod(schemaUrl);
 
       int statusCode;

@@ -24,9 +24,13 @@ apply plugin: "com.commercehub.gradle.plugin.avro"
  }
 */
 
-dependencies {
-  compile project(":gobblin-utility")
+//repositories {
+//
+//}
 
+dependencies {
+//  compile name: 'avro-repo-bundle-1.7.4-SNAPSHOT-withdeps'
+  compile project(":gobblin-utility")
   compile externalDependency.guava
   compile externalDependency.metricsCore
   compile externalDependency.metricsGraphite
@@ -44,7 +48,9 @@ dependencies {
   compile externalDependency.findBugs
   compile externalDependency.commonsHttpClient
   compile externalDependency.commonsCodec
-
+  compile externalDependency.schemarepoClient
+  compile externalDependency.schemarepoCommon
+  compile externalDependency.schemarepoServer
   testCompile externalDependency.testng
   testCompile externalDependency.mockito
   testCompile(externalDependency.kafkaTest){

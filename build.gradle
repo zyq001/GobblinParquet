@@ -114,6 +114,9 @@ ext.externalDependency = [
   "parquetCommon": "org.apache.parquet:parquet-common:1.8.1",
   "parquetHadoop": "org.apache.parquet:parquet-hadoop:1.8.1",
   "parquetAvro": "org.apache.parquet:parquet-avro:1.8.1",
+  "schemarepoClient": "org.schemarepo:schema-repo-client:0.1.1",
+  "schemarepoCommon": "org.schemarepo:schema-repo-common:0.1.1",
+  "schemarepoServer": 'org.schemarepo:schema-repo-server:0.1.1',
 
   "pegasus" : [
     "data" : "com.linkedin.pegasus:data:"+pegasusVersion,

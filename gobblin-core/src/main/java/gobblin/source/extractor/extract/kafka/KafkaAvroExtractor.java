@@ -13,6 +13,7 @@
 package gobblin.source.extractor.extract.kafka;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import kafka.message.MessageAndOffset;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Optional;
 
 import gobblin.configuration.WorkUnitState;
-import gobblin.metrics.kafka.KafkaAvroSchemaRegistry;
+import gobblin.metrics.kafka.*;
 import gobblin.metrics.kafka.SchemaNotFoundException;
 import gobblin.source.extractor.DataRecordException;
 import gobblin.source.extractor.Extractor;
@@ -52,6 +53,7 @@ public class KafkaAvroExtractor extends KafkaExtractor<Schema, GenericRecord> {
 
   private final Optional<Schema> schema;
   private final KafkaAvroSchemaRegistry schemaRegistry;
+//private final AvroRestSchemaRegistry schemaRegistry;
   private final Optional<GenericDatumReader<Record>> reader;
 
   /**
@@ -64,6 +66,8 @@ public class KafkaAvroExtractor extends KafkaExtractor<Schema, GenericRecord> {
   public KafkaAvroExtractor(WorkUnitState state) {
     super(state);
     this.schemaRegistry = new KafkaAvroSchemaRegistry(state.getProperties());
+//    this.schemaRegistry = new AvroRestSchemaRegistry();
+//    this.schemaRegistry.init(state.getProperties());
     this.schema = Optional.fromNullable(getLatestSchemaByTopic());
     System.out.println("schema:   " + this.schema);
     if (this.schema.isPresent()) {
@@ -95,6 +99,23 @@ public class KafkaAvroExtractor extends KafkaExtractor<Schema, GenericRecord> {
     return this.schema.or(DEFAULT_SCHEMA);
   }
 
+  /**
+   * @author zyq
+   *
+   * */
+  public int toInt(byte[] bRefArr) {
+    int iOutcome = 0;
+    byte bLoop;
+
+    for ( int i =0; i<4 ; i++) {
+      bLoop = bRefArr[i];
+      iOutcome+= (bLoop & 0xFF) << (8 * i);
+
+    }
+
+    return iOutcome;
+  }
+
   @Override
   protected GenericRecord decodeRecord(MessageAndOffset messageAndOffset) throws SchemaNotFoundException, IOException {
     byte[] payload = getBytes(messageAndOffset.message().payload());
@@ -105,10 +126,13 @@ public class KafkaAvroExtractor extends KafkaExtractor<Schema, GenericRecord> {
     }
 
     byte[] schemaIdByteArray = Arrays.copyOfRange(payload, 1, 1 + KafkaAvroSchemaRegistry.SCHEMA_ID_LENGTH_BYTE);
-    String schemaId = Hex.encodeHexString(schemaIdByteArray);
+   //byte arr to int camus use an int as schemaid
+    String schemaId = "" + toInt(schemaIdByteArray);
+//    String schemaId = Integer.toString(schemaIdByteArray.)
     Schema schema = null;
 //    System.out.println("schemaId: " + schemaId);
     schema = this.schemaRegistry.getSchemaById(schemaId);
+
 //    schema = this.schemaRegistry.getLatestSchemaByTopic("realtime");
     System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDcode: schema: " + schema);
     reader.get().setSchema(schema);
@@ -119,6 +143,8 @@ public class KafkaAvroExtractor extends KafkaExtractor<Schema, GenericRecord> {
             payload.length - 1 - KafkaAvroSchemaRegistry.SCHEMA_ID_LENGTH_BYTE, null);
     System.out.println("binaryDecoder  " + binaryDecoder);
     try {
+      GenericDatumReader<Record> rr = reader.get();
+      System.out.println("rrrrrrrrrrrrrrrrrrr:   " + rr.getData());
       GenericRecord record = reader.get().read(null, binaryDecoder);
       System.out.println("GGGGGGGGGGGrecord.get(0) :  " + record.get(0));
       System.out.println("GGGGGGGGGGGGGrecord.get(\"city\") :  " + record.get("city"));
@@ -131,6 +157,7 @@ public class KafkaAvroExtractor extends KafkaExtractor<Schema, GenericRecord> {
     }
     catch (IOException e) {
       System.out.println("eeeeeeeeeeexception:  " + e.toString());
+//      e.printStackTrace();
       LOG.error(String.format("Error during decoding record for partition %s: ", this.getCurrentPartition()));
       System.out.println("exception:  " + e + "\nstack: \n" + e.getStackTrace());
       e.printStackTrace();

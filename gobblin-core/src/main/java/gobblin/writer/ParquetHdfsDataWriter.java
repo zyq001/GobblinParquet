@@ -24,7 +24,7 @@ class ParquetHdfsDataWriter extends FsDataWriter<GenericRecord>{
 
     protected final AtomicLong count = new AtomicLong(0);
     private MessageType schema = null;
-    private ParquetWriter writer;
+    private ParquetWriter<GenericRecord> writer;
 
     public ParquetHdfsDataWriter(State properties, String fileName, org.apache.avro.Schema schema, int numBranches, int branchId)
             throws IOException {

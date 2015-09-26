@@ -164,6 +164,7 @@ public abstract class KafkaExtractor<S, D> extends EventBasedExtractor<S, D> {
           System.out.println("record.toString(): " + record);
           return record;
         } catch (SchemaNotFoundException e) {
+          e.printStackTrace();
           this.errorPartitions.add(this.currentPartitionIdx);
           this.invalidSchemaIdCount++;
           if (shouldLogError()) {
@@ -174,6 +175,7 @@ public abstract class KafkaExtractor<S, D> extends EventBasedExtractor<S, D> {
             incrementErrorCount();
           }
         } catch (Exception e) {
+          e.printStackTrace();
           this.errorPartitions.add(this.currentPartitionIdx);
           this.undecodableMessageCount++;
           if (shouldLogError()) {
