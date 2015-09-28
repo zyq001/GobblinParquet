@@ -2,7 +2,7 @@ package gobblin.source.extractor.extract.kafka;
 
 import com.google.common.base.Optional;
 import gobblin.configuration.WorkUnitState;
-import gobblin.metrics.kafka.KafkaAvroSchemaRegistry;
+import gobblin.metrics.kafka.AvroRestSchemaRegistry;
 import gobblin.metrics.kafka.SchemaNotFoundException;
 import gobblin.source.extractor.DataRecordException;
 import gobblin.util.AvroUtils;
@@ -39,7 +39,7 @@ public class SchemaRepoKafkaAvroExtractor extends KafkaExtractor<Schema, Generic
         super(state);
         this.schemaRepoRegistry = new AvroRestSchemaRegistry(state.getProperties());
 
-        this.schema = Optional.fromNullable(this.schemaRepoRegistry.getLatestSchemaByTopic());
+        this.schema = Optional.fromNullable(this.schemaRepoRegistry.getLatestSchemaByTopic(this.topicName));
         if (this.schema.isPresent()) {
             this.reader = Optional.of(new GenericDatumReader<GenericData.Record>(this.schema.get()));
         } else {
@@ -94,7 +94,7 @@ public class SchemaRepoKafkaAvroExtractor extends KafkaExtractor<Schema, Generic
 //    String schemaId = Integer.toString(schemaIdByteArray.)
         Schema schema = null;
 //    System.out.println("schemaId: " + schemaId);
-        schema = this.schemaRegistry.getSchemaById(this.topicName, schemaId);
+        schema = this.schemaRepoRegistry.getSchemaByID(this.topicName, schemaId);
 
 //    schema = this.schemaRegistry.getLatestSchemaByTopic("realtime");
         System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDcode: schema: " + schema);
@@ -102,8 +102,8 @@ public class SchemaRepoKafkaAvroExtractor extends KafkaExtractor<Schema, Generic
         System.out.println("Reader.schema: " + reader.get().getSchema());
         System.out.println("pppppppppppppppppppp:" + new String(payload, "utf-8"));
         Decoder binaryDecoder =
-                DecoderFactory.get().binaryDecoder(payload, 1 + KafkaAvroSchemaRegistry.SCHEMA_ID_LENGTH_BYTE,
-                        payload.length - 1 - KafkaAvroSchemaRegistry.SCHEMA_ID_LENGTH_BYTE, null);
+                DecoderFactory.get().binaryDecoder(payload, 1 + AvroRestSchemaRegistry.SCHEMA_ID_LENGTH_BYTE,
+                        payload.length - 1 - AvroRestSchemaRegistry.SCHEMA_ID_LENGTH_BYTE, null);
         System.out.println("binaryDecoder  " + binaryDecoder);
         try {
             GenericDatumReader<GenericData.Record> rr = reader.get();
